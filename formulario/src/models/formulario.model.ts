@@ -1,8 +1,8 @@
 export class Formulario {
-  public IdFormulario?: number;
-  public  Titulo!: string;
-  public  Campo1!: string;
-  public  Campo2!: string;
-  public  Campo3!: string;
+  public idFormulario?: number;
+  public  titulo!: string;
+  public  campo1!: string;
+  public  campo2!: string;
+  public  campo3!: string;
 
 }
