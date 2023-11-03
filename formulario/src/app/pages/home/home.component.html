@@ -1,0 +1,28 @@
+<div class="container">
+  <form class="form row">
+    <!-- Campo título -->
+    <mat-form-field class="col">
+      <mat-label>Titulo</mat-label>
+      <input #Titulo (change)="sendForm()"  matInput type="text" >
+    </mat-form-field>
+
+    <!-- Campo 1 -->
+    <mat-form-field class="col">
+      <mat-label>Campo 1</mat-label>
+      <input #Campo1 (change)="sendForm()" matInput type="text" >
+    </mat-form-field>
+
+    <!-- Campo 2 -->
+    <mat-form-field class="col">
+      <mat-label>Campo 2</mat-label>
+      <input #Campo2 (change)="sendForm()" matInput type="text" >
+    </mat-form-field>
+
+    <!-- Campo 3 -->
+    <mat-form-field class="col">
+      <mat-label>Campo 3</mat-label>
+      <input #Campo3 (change)="sendForm()" matInput type="text" >
+    </mat-form-field>
+
+  </form>
+</div>
