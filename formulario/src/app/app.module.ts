@@ -13,11 +13,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
+import { ModalCriarUsuarioComponent } from './components/modal-criar-usuario/modal-criar-usuario.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    ModalCriarUsuarioComponent,
   ],
   imports: [
     BrowserModule,

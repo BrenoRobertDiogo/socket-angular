@@ -1,33 +1,52 @@
-<div class="container">
-  <form class="form row">
+<div class="row">
+  <div class="col col-9">
     <!-- Campo título -->
     <mat-form-field class="col">
       <mat-label>Titulo</mat-label>
-      <input #Titulo (change)="sendForm()"  matInput type="text" >
+      <input (keyup)="sendForm()" #Titulo matInput type="text">
     </mat-form-field>
 
-    <!-- Campo 1 -->
-    <mat-form-field class="col">
-      <mat-label>Campo 1</mat-label>
-      <input #Campo1 (change)="sendForm()" matInput type="text" >
-    </mat-form-field>
-
-    <!-- Campo 2 -->
-    <mat-form-field class="col">
-      <mat-label>Campo 2</mat-label>
-      <input #Campo2 (change)="sendForm()" matInput type="text" >
-    </mat-form-field>
+    <div class="row">
+      <div class="col-6">
+        <!-- Campo 1 -->
+        <mat-form-field class="col">
+          <mat-label>Campo 1</mat-label>
+          <input (keyup)="sendForm()" #Campo1 matInput type="text">
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <!-- Campo 2 -->
+        <mat-form-field class="col">
+          <mat-label>Campo 2</mat-label>
+          <input (keyup)="sendForm()" #Campo2 matInput type="text">
+        </mat-form-field>
+      </div>
+    </div>
 
     <!-- Campo 3 -->
     <mat-form-field class="col">
-      <mat-label>Campo 3</mat-label>
-      <input #Campo3 (change)="sendForm()" matInput type="text" >
+      <mat-label>Descrição</mat-label>
+      <textarea (keyup)="sendForm()" #Campo3 matInput type="text"></textarea>
     </mat-form-field>
 
-  </form>
-  <li *ngFor="let mensagem of this.mensagens; index as i; first as isFirst">
-    {{mensagem}}
-  </li>
+  </div>
+  <div class="col col-3" style="background-color:#683ab758">
+    <mat-form-field class="col">
+      <mat-label>Nome de Usuário</mat-label>
+      <input #CampoNomeUsuario matInput type="text" [disabled]="this.campoNomeUsuarioDisabled" (change)="this.sendUserUpdate()">
+    </mat-form-field>
 
-  <button class="btn btn-outline-danger" (click)="sendMessage()">Message</button>
-</div>
+    <li *ngFor="let mensagem of this.mensagemLogs; index as i;">
+      {{mensagem}}
+    </li>
+  </div>
+
+
+  <!-- <button class="btn btn-outline-danger" (click)="sendMessage()">Message</button> -->
+
+  <!-- Button trigger modal -->
+  <!-- <button #botaoLaunchModal type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+  Launch demo modal
+</button>
+
+<app-modal-criar-usuario idModal="exampleModalLong"></app-modal-criar-usuario> -->
