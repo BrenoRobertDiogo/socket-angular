@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Server_form.Operations;
+using Server_form.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +40,8 @@ namespace Server_form
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<SocketRoute>("/form");
+                endpoints.MapHub<FormController>("/form");
+                endpoints.MapHub<UserController>("/user");
             });
         }
     }

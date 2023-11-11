@@ -1,0 +1,40 @@
+/* #logsUsuarios {
+  background-color:#683ab758;
+  height: calc(100vh - 10vh);
+} */
+
+.container {
+  margin-top: 15px;
+}
+
+#nomeUsuario {
+  /* margin-top: 15px; */
+}
+
+.mensagemLog {
+  background-color: aliceblue;
+  border-radius: 15px;
+  margin-bottom: 5px;
+  text-align: center;
+
+  /* border: 1px solid; */
+}
+
+
+#areaLogs {
+  background-color:#683ab758;
+}
+
+.userAdicionado {
+  color: blue;
+}
+
+#imagemPerfil {
+  width: 50px;
+  height: 50px;
+  border-radius: 150px;
+}
+
+#imagemPerfilArea {
+  margin-top: 50px;
+}

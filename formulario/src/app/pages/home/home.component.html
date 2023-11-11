@@ -1,44 +1,60 @@
-<div class="row">
-  <div class="col col-9">
-    <!-- Campo título -->
-    <mat-form-field class="col">
-      <mat-label>Titulo</mat-label>
-      <input (keyup)="sendForm()" #Titulo matInput type="text">
-    </mat-form-field>
+<div class="container">
 
-    <div class="row">
-      <div class="col-6">
-        <!-- Campo 1 -->
-        <mat-form-field class="col">
-          <mat-label>Campo 1</mat-label>
-          <input (keyup)="sendForm()" #Campo1 matInput type="text">
-        </mat-form-field>
+  <div class="row">
+    <div class="col col-9">
+      <!-- Campo título -->
+      <mat-form-field class="col">
+        <mat-label>Titulo</mat-label>
+        <input (keyup)="sendForm()" #Titulo matInput type="text">
+      </mat-form-field>
+
+      <div class="row">
+        <div class="col-6">
+          <!-- Campo 1 -->
+          <mat-form-field class="col">
+            <mat-label>Campo 1</mat-label>
+            <input (keyup)="sendForm()" #Campo1 matInput type="text">
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <!-- Campo 2 -->
+          <mat-form-field class="col">
+            <mat-label>Campo 2</mat-label>
+            <input (keyup)="sendForm()" #Campo2 matInput type="text">
+          </mat-form-field>
+        </div>
       </div>
-      <div class="col-6">
-        <!-- Campo 2 -->
-        <mat-form-field class="col">
-          <mat-label>Campo 2</mat-label>
-          <input (keyup)="sendForm()" #Campo2 matInput type="text">
-        </mat-form-field>
+
+      <!-- Campo 3 -->
+      <mat-form-field class="col">
+        <mat-label>Descrição</mat-label>
+        <textarea (keyup)="sendForm()" #Campo3 matInput type="text"></textarea>
+      </mat-form-field>
+
+    </div>
+    <div class="col col-3" id="areaLogs">
+      <div class="row">
+        <div id="imagemPerfilArea" class="col col-3" *ngIf="this.user?.imagemPerfil">
+          <img id="imagemPerfil" src="{{this.user.imagemPerfil}}" alt="Imagem de perfil do usuário {{this.user.nome}}">
+        </div>
+        <div class="col" ngClass="{'col-9': this.user?.imagemPerfil}">
+          <mat-form-field class="col" id="nomeUsuario">
+            <mat-label>Nome de Usuário</mat-label>
+            <input #CampoNomeUsuario matInput type="text" [disabled]="this.campoNomeUsuarioDisabled"
+              (change)="this.sendUserUpdate()">
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      <div *ngFor="let mensagem of this.mensagemLogs; index as i;" class="mensagemLog" [style]="'border: 1px solid ' + mensagem.Usuario.cor">
+        <span [ngClass]="{'userAdicionado': mensagem.TipoLog == 0} " >
+
+          {{mensagem.Mensagem}}
+        </span>
       </div>
     </div>
 
-    <!-- Campo 3 -->
-    <mat-form-field class="col">
-      <mat-label>Descrição</mat-label>
-      <textarea (keyup)="sendForm()" #Campo3 matInput type="text"></textarea>
-    </mat-form-field>
-
-  </div>
-  <div class="col col-3" style="background-color:#683ab758">
-    <mat-form-field class="col">
-      <mat-label>Nome de Usuário</mat-label>
-      <input #CampoNomeUsuario matInput type="text" [disabled]="this.campoNomeUsuarioDisabled" (change)="this.sendUserUpdate()">
-    </mat-form-field>
-
-    <li *ngFor="let mensagem of this.mensagemLogs; index as i;">
-      {{mensagem}}
-    </li>
   </div>
 
 
