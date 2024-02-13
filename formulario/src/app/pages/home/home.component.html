@@ -1,54 +1,61 @@
 <div class="container">
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>ATENÇÃO!</strong> Digite seu nome para conseguir editar o formulário.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
   <div class="row">
     <div class="col col-9">
-      <!-- Campo título -->
-      <mat-form-field class="col">
-        <mat-label>Titulo</mat-label>
-        <input (keyup)="sendForm()" #Titulo matInput type="text">
-      </mat-form-field>
+      <form action="" method="post">
+        <!-- Campo título -->
+        <mat-form-field class="col">
+          <mat-label>Titulo</mat-label>
+          <input (keyup)="sendForm()" #Titulo matInput type="text" [disabled]="!this.formularioAtivado">
+        </mat-form-field>
 
-      <div class="row">
-        <div class="col-6">
-          <!-- Campo 1 -->
-          <mat-form-field class="col">
-            <mat-label>Campo 1</mat-label>
-            <input (keyup)="sendForm()" #Campo1 matInput type="text">
-          </mat-form-field>
-        </div>
-        <div class="col-6">
-          <!-- Campo 2 -->
-          <mat-form-field class="col">
-            <mat-label>Campo 2</mat-label>
-            <input (keyup)="sendForm()" #Campo2 matInput type="text">
-          </mat-form-field>
-        </div>
-      </div>
+        <div class="row">
+          <div class="col-6">
+            <!-- Campo 1 -->
+            <mat-form-field class="col">
+              <mat-label>Campo 1</mat-label>
+              <input (keyup)="sendForm()" #Campo1 matInput type="text" [disabled]="!this.formularioAtivado">
+            </mat-form-field>
+          </div>
+          <div class="col-6">
+            <!-- Campo 2 -->
+            <mat-form-field class="col">
+              <mat-label>Campo 2</mat-label>
+              <input (keyup)="sendForm()" #Campo2 matInput type="text" [disabled]="!this.formularioAtivado">
+            </mat-form-field>
 
-      <!-- Campo 3 -->
-      <mat-form-field class="col">
-        <mat-label>Descrição</mat-label>
-        <textarea (keyup)="sendForm()" #Campo3 matInput type="text"></textarea>
-      </mat-form-field>
+          </div>
+        </div>
+        <!-- Campo 3 -->
+        <mat-form-field class="col">
+          <mat-label>Descrição</mat-label>
+          <textarea (keyup)="sendForm()" #Campo3 matInput type="text" [disabled]="!this.formularioAtivado"></textarea>
+        </mat-form-field>
+      </form>
+
 
     </div>
     <div class="col col-3" id="areaLogs">
+      <div id="imagemPerfilArea" *ngIf="this.user?.imagemPerfil">
+        <img id="imagemPerfil" src="{{this.user.imagemPerfil}}" alt="Imagem de perfil do usuário {{this.user.nome}}">
+      </div>
       <div class="row">
-        <div id="imagemPerfilArea" class="col col-3" *ngIf="this.user?.imagemPerfil">
-          <img id="imagemPerfil" src="{{this.user.imagemPerfil}}" alt="Imagem de perfil do usuário {{this.user.nome}}">
-        </div>
-        <div class="col" ngClass="{'col-9': this.user?.imagemPerfil}">
-          <mat-form-field class="col" id="nomeUsuario">
-            <mat-label>Nome de Usuário</mat-label>
-            <input #CampoNomeUsuario matInput type="text" [disabled]="this.campoNomeUsuarioDisabled"
-              (change)="this.sendUserUpdate()">
-          </mat-form-field>
+        <input class="col form-control" placeholder="Nome usuário" #CampoNomeUsuario matInput type="text"
+          [disabled]="this.campoNomeUsuarioDisabled">
+        <button class="btn btn-dark col-3" (click)="ativaFormulario()">></button>
 
-        </div>
       </div>
 
-      <div *ngFor="let mensagem of this.mensagemLogs; index as i;" class="mensagemLog" [style]="'border: 1px solid ' + mensagem.Usuario.cor">
-        <span [ngClass]="{'userAdicionado': mensagem.TipoLog == 0} " >
+
+      <div *ngFor="let mensagem of this.mensagemLogs; index as i;" class="mensagemLog"
+        [style]="'border: 1px solid ' + mensagem.Usuario.cor">
+        <span [ngClass]="{'userAdicionado': mensagem.TipoLog == 0} ">
 
           {{mensagem.Mensagem}}
         </span>
@@ -56,7 +63,6 @@
     </div>
 
   </div>
-
 
   <!-- <button class="btn btn-outline-danger" (click)="sendMessage()">Message</button> -->
 

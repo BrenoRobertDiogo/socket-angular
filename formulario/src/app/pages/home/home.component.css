@@ -8,7 +8,7 @@
 }
 
 #nomeUsuario {
-  /* margin-top: 15px; */
+  margin-top: 15px;
 }
 
 .mensagemLog {
@@ -16,7 +16,7 @@
   border-radius: 15px;
   margin-bottom: 5px;
   text-align: center;
-
+  margin-top: 10%;
   /* border: 1px solid; */
 }
 

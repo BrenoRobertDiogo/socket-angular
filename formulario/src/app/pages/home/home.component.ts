@@ -30,12 +30,16 @@ export class HomeComponent implements OnInit {
     .build();
 
   public mensagemLogs: Log[] = [];
+  public formularioAtivado!: boolean;
 
   public campoNomeUsuarioDisabled: boolean = false;
 
-  constructor() { }
+  constructor() {
+    this.formularioAtivado = false;
+  }
   public ngOnInit(): void {
     this.startConnection();
+
   }
 
   private async startConnection() {
@@ -43,17 +47,7 @@ export class HomeComponent implements OnInit {
     this.connectUpdateUserData();
     this.connectNewUser();
 
-    this.userConnection.start().then(_ => {
-      this.user = {
-          id: Utils.getRndInteger(0, 100000)
-        , nome: 'Novo usuário'
-        , imagemPerfil: ''// `https://cbissn.ibict.br/index.php/imagens/1-galeria-de-imagens-01/detail/3-imagem-3-titulo-com-ate-45-caracteres?tmpl=component&phocadownload=1`
-        , cor: `rgb(${Utils.getRndInteger(0, 255)}, ${Utils.getRndInteger(0, 255)}, ${Utils.getRndInteger(0, 255)})`
-
-
-      }
-      this.sendNewUser(this.user);
-    });
+    this.userConnection.start().then(_ => { });
     this.formConnection.start();
   }
 
@@ -79,7 +73,7 @@ export class HomeComponent implements OnInit {
       this.pessoasConectadas[indexUserUpdated] = user;
 
       this.mensagemLogs.push({
-        Mensagem: `O usuário ${nomeAntigo} alterou o nome para ${user.nome}`,
+        Mensagem: `O usuário "${nomeAntigo}" alterou o nome para "${user.nome}"`,
         TipoLog: TipoLogEnum.Update,
         Usuario: user
       });
@@ -91,11 +85,11 @@ export class HomeComponent implements OnInit {
     this.userConnection.on(Connections.NewUserConnected, (user: User) => {
       this.mensagemLogs.push(
         {
-          Mensagem: `${user.nome} adicionado ao chat.`,
+          Mensagem: `"${user.nome}" adicionado ao chat.`,
           TipoLog: TipoLogEnum.Create,
           Usuario: user
         }
-          );
+      );
       this.pessoasConectadas.push(user);
       console.log(this.pessoasConectadas);
 
@@ -120,6 +114,26 @@ export class HomeComponent implements OnInit {
    */
   public async sendUserUpdate() {
     this.user.nome = this.CampoNomeUsuario.nativeElement.value;
-    await this.userConnection.send(Connections.UpdateUserData, this.user)
+    await this.userConnection.send(Connections.UpdateUserData, this.user);
   }
+
+  public ativaFormulario() {
+    if (this.formularioAtivado) {
+      this.sendUserUpdate();
+    } else {
+      this.user = {
+        id: Utils.getRndInteger(0, 100000)
+        , nome: this.CampoNomeUsuario.nativeElement.value
+        , imagemPerfil: ''// `https://cbissn.ibict.br/index.php/imagens/1-galeria-de-imagens-01/detail/3-imagem-3-titulo-com-ate-45-caracteres?tmpl=component&phocadownload=1`
+        , cor: `rgb(${Utils.getRndInteger(0, 255)}, ${Utils.getRndInteger(0, 255)}, ${Utils.getRndInteger(0, 255)})`
+
+
+      }
+      this.sendNewUser(this.user);
+
+    }
+
+    this.formularioAtivado = true;
+  }
+
 }
