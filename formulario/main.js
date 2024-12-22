@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const readline = require('node:readline');
+// const readline = require('node:readline');
 let paths = [];
 
 const PERGUNTA_ROTA = require('readline').createInterface({
@@ -9,9 +9,28 @@ const PERGUNTA_ROTA = require('readline').createInterface({
 });
 
 const COMPONENTS_DIR = path.join(__dirname, 'src/app');
-const ROUTES_FILE = path.join(__dirname, '/src/app/elementos/elementos-routing.module.ts');
-const ARQUIVOS_MODIFICADOS = fs.readFileSync(path.join(__dirname, '/arquivos_modificados.txt'), 'utf8').split('\n').filter(Boolean);
-const content = fs.readFileSync(ROUTES_FILE, 'utf8');
+// const ARQUIVOS_MODIFICADOS = fs.readFileSync(path.join(__dirname, '/arquivos_modificados.txt'), 'utf8').split('\n').filter(Boolean);
+let arquivos = fs.readFileSync(path.join(__dirname, '/arquivos_modificados.txt'), 'utf8').split('\n').filter(Boolean)
+let ARQUIVOS_MODIFICADOS = [];
+
+let paiAtualArquivo;
+arquivos.forEach(arquivo => {
+  let isCabecalho = arquivo.split(',').length > 1;
+  if (isCabecalho) {
+    let cabecalho = arquivo.split(',');
+    let nome = cabecalho[0];
+    let data_commit = cabecalho[1];
+    paiAtualArquivo = {nome, data_commit}
+  } else {
+    console.log(paiAtualArquivo);
+    ARQUIVOS_MODIFICADOS.push( {arquivoAlterado: arquivo, ...paiAtualArquivo});
+  }
+
+});
+
+console.log(ARQUIVOS_MODIFICADOS);
+// const ROUTES_FILE = path.join(__dirname, '/src/app/elementos/elementos-routing.module.ts');
+// const content = fs.readFileSync(ROUTES_FILE, 'utf8');
 
 function recuperarTodosArquivos(dir, fileList = []) {
     const files = fs.readdirSync(dir);
@@ -91,33 +110,33 @@ function formataString(string) {
 }
 
 function insereEmPathRecursivamente(objeto, caminho = '', arquivo_modificado = false) {
-    if (objeto.children) {
-        objeto.children.forEach((filho) => {
-            insereEmPathRecursivamente(filho, caminho + '/' + objeto.path, arquivo_modificado);
-        });
-    }
-    let objetoIncluso = { rota: rota_raiz + caminho + '/' + objeto.path, componente: objeto.component?.toString(), arquivos: objeto.component ? encontrarComponentes(objeto.component.toString()) : undefined };
-
-
-
-    let stringTratada = '';
-    if (arquivo_modificado && objetoIncluso.componente) {
-        stringTratada = ARQUIVOS_MODIFICADOS.find(arq => formataString(arq).includes(objetoIncluso.componente.toLowerCase().replace('component', '')));
-    }
-
-    if (paths.find(x => x.rota == objetoIncluso.rota) || (arquivo_modificado && stringTratada))
-        return;
-    paths.push(objetoIncluso);
-}
-
-function rodaCodigoEmUmaRota(conteudo = content) {
-    const arrayOriginal = extrairConteudoDoArray(conteudo, 'routes');
-
-    arrayOriginal.forEach((objeto) => {
-        insereEmPathRecursivamente(objeto = objeto, rota = '', arquivo_modificado = false);
+  if (objeto.children) {
+    objeto.children.forEach((filho) => {
+      insereEmPathRecursivamente(filho, caminho + '/' + objeto.path, arquivo_modificado);
     });
+  }
+  let objetoIncluso = { rota: rota_raiz + caminho + '/' + objeto.path, componente: objeto.component?.toString(), arquivos: objeto.component ? encontrarComponentes(objeto.component.toString()) : undefined };
 
+
+
+  let stringTratada = '';
+  if (arquivo_modificado && objetoIncluso.componente) {
+    stringTratada = ARQUIVOS_MODIFICADOS.find(arq => formataString(arq.arquivoAlterado).includes(objetoIncluso.componente.toLowerCase().replace('component', '')));
+  }
+
+  if (paths.find(x => x.rota == objetoIncluso.rota) || (arquivo_modificado && stringTratada))
+  return;
+  paths.push(objetoIncluso);
 }
+
+// function rodaCodigoEmUmaRota(conteudo = content) {
+//     const arrayOriginal = extrairConteudoDoArray(conteudo, 'routes');
+
+//     arrayOriginal.forEach((objeto) => {
+//         insereEmPathRecursivamente(objeto = objeto, rota = '', arquivo_modificado = false);
+//     });
+
+// }
 
 
 

@@ -4,7 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'raiz',
     component: HomeComponent
   }
 ];
