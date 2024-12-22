@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('Campo1') Campo1!: ElementRef;
   @ViewChild('Campo2') Campo2!: ElementRef;
   @ViewChild('Campo3') Campo3!: ElementRef;
+  @ViewChild('MensagemDigitarCampo') MensagemDigitarCampo!: ElementRef;
   @ViewChild('CampoNomeUsuario') CampoNomeUsuario!: ElementRef;
   public formulario: Formulario = new Formulario();
   public user!: User;
@@ -118,6 +119,7 @@ export class HomeComponent implements OnInit {
   }
 
   public ativaFormulario() {
+    this.MensagemDigitarCampo.nativeElement.style = 'visibility: none'
     if (this.formularioAtivado) {
       this.sendUserUpdate();
     } else {
